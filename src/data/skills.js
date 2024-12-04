@@ -1,0 +1,18 @@
+export const skills = [
+  ".NET Core",
+  ".NET Framework",
+  "VB6",
+  "VB.NET",
+  "C#",
+  "JavaScript",
+  "Angular",
+  "VueJS",
+  "NuxtJS",
+  "Node.js",
+  "Python",
+  "TypeScript",
+  "AWS",
+  "Docker",
+  "MS SQL Server",
+  "Oracle",
+];
