@@ -24,19 +24,19 @@ export const ThemeProvider = ({ children }) => {
       const locationResponse = await fetch(
         import.meta.env.VITE_APP_ENV === "dev"
           ? "http://ip-api.com/json/"
-          : `https://api.ipapi.com/api/check?access_key=${
+          : `https://pro.ipapi.org/api_json/one.php?key=${
               import.meta.env.VITE_IPAPI_KEY
             }`
       );
       const locationData = await locationResponse.json();
 
       if (locationData) {
-        let { latitude, longitude } = locationData;
+        let { lat, lon } = locationData;
         const apiKey = import.meta.env.VITE_WEATHERAPI_KEY;
 
         // Fetch weather data using coordinates
         const weatherResponse = await fetch(
-          `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${latitude},${longitude}`
+          `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${lat},${lon}`
         );
         const weatherData = await weatherResponse.json();
         setWeather(weatherData); // Set the weather data in state
