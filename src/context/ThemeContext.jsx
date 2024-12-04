@@ -24,11 +24,10 @@ export const ThemeProvider = ({ children }) => {
       const locationResponse = await fetch(
         import.meta.env.VITE_APP_ENV === "dev"
           ? "http://ip-api.com/json/"
-          : `http://api.ipapi.com/api/check?access_key=${
+          : `https://api.ipapi.com/api/check?access_key=${
               import.meta.env.VITE_IPAPI_KEY
             }`
       );
-      console.log(locationResponse);
       const locationData = await locationResponse.json();
 
       if (locationData.status === "success") {
