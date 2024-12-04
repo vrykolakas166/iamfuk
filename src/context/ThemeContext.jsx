@@ -33,7 +33,7 @@ export const ThemeProvider = ({ children }) => {
       if (locationData) {
         let { lat, lon } = locationData;
         const apiKey = import.meta.env.VITE_WEATHERAPI_KEY;
-
+        console.log(locationData);
         // Fetch weather data using coordinates
         const weatherResponse = await fetch(
           `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${lat},${lon}`
