@@ -30,13 +30,13 @@ export const ThemeProvider = ({ children }) => {
       );
       const locationData = await locationResponse.json();
 
-      if (locationData.status === "success") {
-        let { lat, lon } = locationData;
+      if (locationData) {
+        let { latitude, longitude } = locationData;
         const apiKey = import.meta.env.VITE_WEATHERAPI_KEY;
 
         // Fetch weather data using coordinates
         const weatherResponse = await fetch(
-          `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${lat},${lon}`
+          `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${latitude},${longitude}`
         );
         const weatherData = await weatherResponse.json();
         setWeather(weatherData); // Set the weather data in state
