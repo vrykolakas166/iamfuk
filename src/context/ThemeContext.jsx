@@ -24,14 +24,16 @@ export const ThemeProvider = ({ children }) => {
       const locationResponse = await fetch(
         import.meta.env.VITE_APP_ENV === "dev"
           ? "http://ip-api.com/json/"
-          : "https://ip-api.com/json/"
+          : `http://api.ipapi.com/api/check?access_key=${
+              import.meta.env.VITE_IPAPI_KEY
+            }`
       );
       console.log(locationResponse);
       const locationData = await locationResponse.json();
 
       if (locationData.status === "success") {
         let { lat, lon } = locationData;
-        const apiKey = "b4d340a0dbce4fbf8ec15902232005";
+        const apiKey = import.meta.env.VITE_WEATHERAPI_KEY;
 
         // Fetch weather data using coordinates
         const weatherResponse = await fetch(
