@@ -77,7 +77,11 @@ const WeatherForecast = () => {
               <div className="flex flex-col justify-center items-center">
                 <img
                   className="w-auto h-auto"
-                  src={`http:${weather.current?.condition.icon}`}
+                  src={
+                    import.meta.env.VITE_APP_ENV === "dev"
+                      ? `http:${weather.current?.condition.icon}`
+                      : `https:${weather.current?.condition.icon}`
+                  }
                   alt={weather.current?.condition.text}
                 />
                 <p className="capitalize">{weather.current?.condition.text}</p>
@@ -88,7 +92,11 @@ const WeatherForecast = () => {
         ) : (
           <img
             className="w-auto h-auto mx-auto"
-            src={`http:${weather.current?.condition.icon}`}
+            src={
+              import.meta.env.VITE_APP_ENV === "dev"
+                ? `http:${weather.current?.condition.icon}`
+                : `https:${weather.current?.condition.icon}`
+            }
             alt={weather.current?.condition.text}
           />
         )
