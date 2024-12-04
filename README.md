@@ -1,8 +1,8 @@
 # Portfolio website
 
 > Just a part of me
-
-![iamfuk.io.vn](https://iamfuk.io.vn)
+> 
+> [<img src="iamfuk.png" width="15" alt="web favicon"> Go to wesbite](https://iamfuk.io.vn)
 
 ## Development
 
