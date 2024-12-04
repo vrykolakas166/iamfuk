@@ -26,11 +26,7 @@ export const ThemeProvider = ({ children }) => {
 
       if (locationData.status === "success") {
         let { lat, lon } = locationData;
-        const apiKey = "b4d340a0dbce4fbf8ec15902232005"; // Replace with your actual API key
-
-        // test coordinates (you can remove this when using real data)
-        lat = 32.635155;
-        lon = 110.792347;
+        const apiKey = "b4d340a0dbce4fbf8ec15902232005";
 
         // Fetch weather data using coordinates
         const weatherResponse = await fetch(

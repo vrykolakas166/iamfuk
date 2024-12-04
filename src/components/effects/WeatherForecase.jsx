@@ -13,7 +13,7 @@ const WeatherForecast = () => {
         width: "36px",
         height: "36px",
       }}
-      className="rounded-2xl p-1 dark:shadow-white border-2 border-gray-400 dark:border-white/50 text-black dark:text-white text-center flex justify-center items-center"
+      className="rounded-2xl p-1 hover:bg-neutral-100 dark:hover:bg-neutral-900 border-2 border-gray-400 dark:border-white/50 text-black dark:text-white text-center flex justify-center items-center"
       transition={{
         duration: 0.5,
         delay: 0,
@@ -26,10 +26,10 @@ const WeatherForecast = () => {
         width: "200px",
         height: "200px",
       }}
-      onMouseEnter={() => setIsNormalSize(true)}
-      onMouseLeave={() => setIsNormalSize(false)}
-      onTapStart={() => setIsNormalSize(true)}
-      onTapCancel={() => setIsNormalSize(false)}
+      onHoverStart={() => setIsNormalSize(true)}
+      onHoverEnd={() => setIsNormalSize(false)}
+      onPointerDown={() => setIsNormalSize(true)}
+      onPointerUp={() => setIsNormalSize(false)}
     >
       {weather?.current ? (
         isNormalSize ? (

@@ -10,7 +10,10 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <div className="fixed w-full z-50 px-4 sm:px-6 lg:px-8 top-4">
+    <div
+      className="fixed w-full z-50 px-4 sm:px-6 lg:px-8 top-4"
+      onMouseLeave={() => setIsMenuOpen(false)}
+    >
       <nav className="max-w-7xl mx-auto bg-white/70 dark:bg-neutral-900/50 backdrop-blur-md rounded-2xl border border-gray-200/20 dark:border-white/5 shadow-lg">
         <div className="px-4 sm:px-6">
           <div className="flex items-center justify-between h-16">
@@ -29,7 +32,7 @@ const Navbar = () => {
             {/* Hamburger menu for small screens */}
             <div className="md:hidden flex items-center">
               <button
-                onClick={() => setIsMenuOpen(true)}
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="text-gray-700 dark:text-white focus:outline-none"
               >
                 <svg
@@ -51,7 +54,14 @@ const Navbar = () => {
           </div>
 
           {/* Mobile menu */}
-          <div className={`${isMenuOpen ? "block" : "hidden"} md:hidden`}>
+          <div
+            className={`${
+              isMenuOpen
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 h-0 translate-y-[-100%]"
+            } md:hidden`}
+            style={{ transition: "0.35s ease" }}
+          >
             <div className="flex flex-col items-center space-y-4 py-4">
               {routes.map((path) => (
                 <NavLink
