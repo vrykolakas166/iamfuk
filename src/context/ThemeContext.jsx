@@ -21,7 +21,12 @@ export const ThemeProvider = ({ children }) => {
   const getWeatherData = async () => {
     try {
       // Get user location based on IP
-      const locationResponse = await fetch("http://ip-api.com/json/");
+      const locationResponse = await fetch(
+        import.meta.env.VITE_APP_ENV === "dev"
+          ? "http://ip-api.com/json/"
+          : "https://ip-api.com/json/"
+      );
+      console.log(locationResponse);
       const locationData = await locationResponse.json();
 
       if (locationData.status === "success") {
