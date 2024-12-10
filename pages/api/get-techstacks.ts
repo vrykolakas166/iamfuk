@@ -9,7 +9,7 @@ const fetchTechStacks = async () => {
       .from("techstacks")
       .select("*");
     if (error) {
-      console.log("Could not fetch projects data.");
+      console.log("Could not fetch techstacks data.");
     } else {
       return techStacks;
     }
