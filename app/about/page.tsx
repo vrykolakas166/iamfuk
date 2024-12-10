@@ -10,7 +10,7 @@ const About = () => {
 
   useEffect(() => {
     const getData = async () => {
-      const response = await fetch(`${GetBaseURL()}/api/get-techstacks`);
+      const response = await fetch(`${GetBaseURL()}/api/techstacks`);
       if (!response.ok) throw new Error("Failed to fetch data");
       const data = await response.json();
       setTechStacks(data);

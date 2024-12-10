@@ -28,7 +28,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const response = await fetch(`${defaultUrl}/api/get-weather`);
+  const response = await fetch(`${defaultUrl}/api/weather`);
   if (!response.ok) throw new Error("Failed to fetch weather data");
   const weatherData = await response.json();
 

@@ -10,7 +10,7 @@ export default function Page() {
 
   useEffect(() => {
     const getData = async () => {
-      const response = await fetch(`${GetBaseURL()}/api/get-projects`);
+      const response = await fetch(`${GetBaseURL()}/api/projects`);
       if (!response.ok) throw new Error("Failed to fetch data");
       const data = await response.json();
       setProjects(data);
