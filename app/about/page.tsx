@@ -3,24 +3,17 @@
 import { motion } from "framer-motion";
 import { SkillBadge } from "@/components/ui/skill-badge";
 import { useEffect, useState } from "react";
-import { createClient } from "@/utils/supabase/client";
+import { GetBaseURL } from "@/lib/utils";
 
 const About = () => {
   const [techStacks, setTechStacks] = useState<Techstack[] | null>(null);
-  const supabase = createClient();
-  let errMsg;
 
   useEffect(() => {
     const getData = async () => {
-      console.log("Fetching data from supabase");
-      const { data: techStacks, error } = await supabase
-        .from("techstacks")
-        .select("*");
-      if (error) {
-        errMsg = error;
-      } else {
-        setTechStacks(techStacks);
-      }
+      const response = await fetch(`${GetBaseURL()}/api/get-techstacks`);
+      if (!response.ok) throw new Error("Failed to fetch data");
+      const data = await response.json();
+      setTechStacks(data);
     };
     getData();
   }, []);

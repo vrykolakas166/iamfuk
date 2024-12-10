@@ -4,7 +4,6 @@ import HeaderAuth from "@/components/header-auth";
 import { HeaderContainer } from "@/components/header-container";
 import { ThemeProvider } from "next-themes";
 import { ThemeSwitcher } from "@/components/theme-switcher";
-import { getWeatherData } from "@/lib/weather";
 import { RainEffect } from "@/components/effects/RainEffect";
 import { WeatherWidget } from "@/components/ui/weather-widget";
 import Link from "next/link";
@@ -29,7 +28,9 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const weatherData = await getWeatherData();
+  const response = await fetch(`${defaultUrl}/api/get-weather`);
+  if (!response.ok) throw new Error("Failed to fetch weather data");
+  const weatherData = await response.json();
 
   return (
     <html lang="en" className={dmsans.className} suppressHydrationWarning>
@@ -47,7 +48,10 @@ export default async function RootLayout({
                 <nav className="w-full max-w-7xl flex justify-center border border-foreground/10 h-16 backdrop-blur-md sm:rounded-2xl">
                   <div className="w-full py-3 px-5 flex justify-between items-center text-sm">
                     <div className="flex gap-5 items-center font-semibold">
-                      <Link href={"/"} className="text-2xl">
+                      <Link
+                        href={"/"}
+                        className="text-2xl hover:scale-105 transition-all"
+                      >
                         iamfuk.
                       </Link>
                     </div>

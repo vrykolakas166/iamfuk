@@ -1,26 +1,19 @@
 "use client";
 
-import { createClient } from "@/utils/supabase/client";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ProjectCard } from "@/components/ui/project-card";
+import { GetBaseURL } from "@/lib/utils";
 
 export default function Page() {
   const [projects, setProjects] = useState<any[] | null>(null);
-  const supabase = createClient();
-  let errMsg;
 
   useEffect(() => {
     const getData = async () => {
-      console.log("Fetching data from supabase");
-      const { data: projects, error } = await supabase
-        .from("projects")
-        .select("*");
-      if (error) {
-        errMsg = error;
-      } else {
-        setProjects(projects);
-      }
+      const response = await fetch(`${GetBaseURL()}/api/get-projects`);
+      if (!response.ok) throw new Error("Failed to fetch data");
+      const data = await response.json();
+      setProjects(data);
     };
     getData();
   }, []);
