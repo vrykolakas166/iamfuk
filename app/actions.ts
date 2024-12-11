@@ -134,9 +134,10 @@ export const signOutAction = async () => {
 };
 
 export const fetchWeather = async () => {
-  const defaultUrl = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : "http://localhost:3000";
+  const defaultUrl =
+    process.env.NEXT_PUBLIC_APP_ENV != "dev"
+      ? `https://iamfuk.io.vn`
+      : "http://localhost:3000";
 
   let ip = "0.0.0.0";
   try {
