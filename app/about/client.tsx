@@ -5,7 +5,7 @@ import { SkillBadge } from "@/components/ui/skill-badge";
 import LoadingSpinner from "@/components/loading-spinner";
 
 const AboutPageClient = ({ techstacks }: { techstacks: any[] }) => {
-  if (techstacks.length === 0) {
+  if (techstacks.length != 0) {
     return <LoadingSpinner />; // Show loading spinner if no projects
   }
 

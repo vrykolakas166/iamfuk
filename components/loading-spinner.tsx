@@ -2,12 +2,14 @@ import Image from "next/image";
 
 const LoadingSpinner = () => {
   return (
-    <Image
-      src="/assets/loading.gif"
-      alt="Loading..."
-      width={150} // Adjust as needed
-      height={150} // Adjust as needed
-    />
+    <div className="flex items-center justify-center min-h-screen">
+      <Image
+        src="/assets/loading.gif"
+        alt="Loading..."
+        width={200} // Adjust as needed
+        height={200} // Adjust as needed
+      />
+    </div>
   );
 };
 

@@ -2,7 +2,9 @@ import { createClient } from "@/utils/supabase/server";
 import AboutPageClient from "./client";
 
 const fetchTechstacks = async () => {
+  console.log("Create supabase client...");
   const supabase = await createClient();
+  console.log("Fetch techstacks from database...");
   const { data: techstacks, error } = await supabase
     .from("techstacks")
     .select("*");
@@ -12,6 +14,7 @@ const fetchTechstacks = async () => {
     return [];
   }
 
+  console.log("Techstacks:", techstacks);
   return techstacks || [];
 };
 

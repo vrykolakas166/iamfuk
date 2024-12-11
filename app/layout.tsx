@@ -25,22 +25,26 @@ const dmsans = DM_Sans({
 
 async function fetchWeather(): Promise<any> {
   try {
+    console.log("Fetching location data...");
     const locationResponse = await fetch(
       process.env.NEXT_PUBLIC_APP_ENV === "dev"
         ? "http://ip-api.com/json/"
         : `https://pro.ipapi.org/api_json/one.php?key=${process.env.IPAPI_KEY}`
     );
     const locationData = await locationResponse.json();
+    console.log("Location data:", locationData);
 
     if (locationData) {
       const { lat, lon } = locationData;
       const apiKey = process.env.WEATHERAPI_KEY;
 
+      console.log("Fetching weather data...");
       const weatherResponse = await fetch(
         `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${lat},${lon}`
       );
-
-      return await weatherResponse.json();
+      const weatherData = await weatherResponse.json();
+      console.log("Location data:", weatherData);
+      return weatherData;
     } else {
       console.error("Could not fetch location data.");
       return {};
