@@ -26,6 +26,7 @@ const dmsans = DM_Sans({
 async function fetchWeather(): Promise<any> {
   try {
     console.log("Fetching location data...");
+    console.log("IPAPI_KEY:", process.env.IPAPI_KEY);
     const locationResponse = await fetch(
       process.env.NEXT_PUBLIC_APP_ENV === "dev"
         ? "http://ip-api.com/json/"
@@ -39,6 +40,7 @@ async function fetchWeather(): Promise<any> {
       const apiKey = process.env.WEATHERAPI_KEY;
 
       console.log("Fetching weather data...");
+      console.log("WEATHERAPI_KEY:", apiKey);
       const weatherResponse = await fetch(
         `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${lat},${lon}`
       );
