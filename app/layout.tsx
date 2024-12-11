@@ -23,52 +23,11 @@ const dmsans = DM_Sans({
   display: "swap",
 });
 
-async function fetchWeather(): Promise<any> {
-  try {
-    console.log("Fetching user ip...");
-    const currResponse = await fetch("https://api.ipify.org/?format=json");
-    const res = await currResponse.json();
-    console.log("UserIP data:", res);
-
-    console.log("Fetching location data...");
-    console.log("IPAPI_KEY:", process.env.IPAPI_KEY);
-    const locationResponse = await fetch(
-      process.env.NEXT_PUBLIC_APP_ENV === "dev"
-        ? "http://ip-api.com/json/"
-        : `https://pro.ipapi.org/api_json/one.php?key=${process.env.IPAPI_KEY}&ip=${res.ip}`
-    );
-    const locationData = await locationResponse.json();
-    console.log("Location data:", locationData);
-
-    if (locationData) {
-      const { lat, lon } = locationData;
-      const apiKey = process.env.WEATHERAPI_KEY;
-
-      console.log("Fetching weather data...");
-      console.log("WEATHERAPI_KEY:", apiKey);
-      const weatherResponse = await fetch(
-        `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${lat},${lon}`
-      );
-      const weatherData = await weatherResponse.json();
-      console.log("Location data:", weatherData);
-      return weatherData;
-    } else {
-      console.error("Could not fetch location data.");
-      return {};
-    }
-  } catch (error) {
-    console.error("Error fetching weather data:", error);
-    return {};
-  }
-}
-
 export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const weatherData = await fetchWeather();
-
   return (
     <html lang="en" className={dmsans.className} suppressHydrationWarning>
       <body className="bg-background text-foreground">
@@ -78,7 +37,7 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <RainEffect weather={weatherData} />
+          <RainEffect />
           <main className="min-h-screen flex flex-col items-center">
             <div className="flex-1 w-full flex flex-col items-center">
               <HeaderContainer classNameParam="sticky z-50 sm:top-5 sm:px-6">
@@ -112,10 +71,7 @@ export default async function RootLayout({
                     Me
                   </a>
                 </p>
-                <WeatherWidget
-                  classNameParam={`fixed left-4 bottom-4`}
-                  weather={weatherData}
-                />
+                <WeatherWidget classNameParam={`fixed left-4 bottom-4`} />
                 <ThemeSwitcher />
               </footer>
             </div>

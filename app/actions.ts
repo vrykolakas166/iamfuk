@@ -15,7 +15,7 @@ export const signUpAction = async (formData: FormData) => {
     return encodedRedirect(
       "error",
       "/sign-up",
-      "Email and password are required",
+      "Email and password are required"
     );
   }
 
@@ -34,7 +34,7 @@ export const signUpAction = async (formData: FormData) => {
     return encodedRedirect(
       "success",
       "/sign-up",
-      "Thanks for signing up! Please check your email for a verification link.",
+      "Thanks for signing up! Please check your email for a verification link."
     );
   }
 };
@@ -75,7 +75,7 @@ export const forgotPasswordAction = async (formData: FormData) => {
     return encodedRedirect(
       "error",
       "/forgot-password",
-      "Could not reset password",
+      "Could not reset password"
     );
   }
 
@@ -86,7 +86,7 @@ export const forgotPasswordAction = async (formData: FormData) => {
   return encodedRedirect(
     "success",
     "/forgot-password",
-    "Check your email for a link to reset your password.",
+    "Check your email for a link to reset your password."
   );
 };
 
@@ -100,7 +100,7 @@ export const resetPasswordAction = async (formData: FormData) => {
     encodedRedirect(
       "error",
       "/protected/reset-password",
-      "Password and confirm password are required",
+      "Password and confirm password are required"
     );
   }
 
@@ -108,7 +108,7 @@ export const resetPasswordAction = async (formData: FormData) => {
     encodedRedirect(
       "error",
       "/protected/reset-password",
-      "Passwords do not match",
+      "Passwords do not match"
     );
   }
 
@@ -120,7 +120,7 @@ export const resetPasswordAction = async (formData: FormData) => {
     encodedRedirect(
       "error",
       "/protected/reset-password",
-      "Password update failed",
+      "Password update failed"
     );
   }
 
@@ -131,4 +131,52 @@ export const signOutAction = async () => {
   const supabase = await createClient();
   await supabase.auth.signOut();
   return redirect("/sign-in");
+};
+
+export const fetchWeather = async () => {
+  const defaultUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : "http://localhost:3000";
+
+  let ip = "0.0.0.0";
+  try {
+    try {
+      console.log("Fetching user ip...");
+      console.log("defaultUrl", defaultUrl);
+      const currResponse = await fetch(`${defaultUrl}/api/get-ip`);
+      const res = await currResponse.json();
+      ip = res.ip;
+      console.log("UserIP data:", res);
+    } catch (error) {}
+
+    console.log("Fetching location data...");
+    console.log("IPAPI_KEY:", process.env.IPAPI_KEY);
+    const locationResponse = await fetch(
+      process.env.NEXT_PUBLIC_APP_ENV === "dev"
+        ? "http://ip-api.com/json/"
+        : `https://pro.ipapi.org/api_json/one.php?key=${process.env.IPAPI_KEY}&ip=${ip}`
+    );
+    const locationData = await locationResponse.json();
+    console.log("Location data:", locationData);
+
+    if (locationData) {
+      const { lat, lon } = locationData;
+      const apiKey = process.env.WEATHERAPI_KEY;
+
+      console.log("Fetching weather data...");
+      console.log("WEATHERAPI_KEY:", apiKey);
+      const weatherResponse = await fetch(
+        `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${lat},${lon}`
+      );
+      const weatherData = await weatherResponse.json();
+      console.log("Location data:", weatherData);
+      return weatherData;
+    } else {
+      console.error("Could not fetch location data.");
+      return {};
+    }
+  } catch (error) {
+    console.error("Error fetching weather data:", error);
+    return {};
+  }
 };

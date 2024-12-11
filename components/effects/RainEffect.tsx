@@ -1,13 +1,12 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./RainEffect.css";
 import { useTheme } from "next-themes";
+import { fetchWeather } from "@/app/actions";
 
-interface RainEffectProps {
-  weather: any; // Weather data
-}
+interface RainEffectProps {}
 
-const RainEffect: React.FC<RainEffectProps> = ({ weather }) => {
+const RainEffect: React.FC<RainEffectProps> = () => {
   const frontRowRef = useRef<HTMLDivElement>(null);
   const backRowRef = useRef<HTMLDivElement>(null);
   const { theme } = useTheme();
@@ -35,6 +34,16 @@ const RainEffect: React.FC<RainEffectProps> = ({ weather }) => {
     "pelting",
     "rainstorm",
   ];
+
+  const [weather, setWeather] = useState<any>({});
+
+  useEffect(() => {
+    const getData = async () => {
+      const data = await fetchWeather();
+      setWeather(data);
+    };
+    getData();
+  }, []);
 
   useEffect(() => {
     const makeItRain = () => {

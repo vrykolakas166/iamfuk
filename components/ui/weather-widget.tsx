@@ -1,18 +1,26 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { fetchWeather } from "@/app/actions";
 
 interface WeatherWidgetProps {
   classNameParam: string | null;
-  weather: any; // Weather data
 }
 
 const WeatherWidget: React.FC<WeatherWidgetProps> = ({
   classNameParam = "",
-  weather,
 }) => {
+  const [weather, setWeather] = useState<any>({});
   const [isNormalSize, setIsNormalSize] = useState(false);
+
+  useEffect(() => {
+    const getData = async () => {
+      const data = await fetchWeather();
+      setWeather(data);
+    };
+    getData();
+  }, []);
 
   return (
     <motion.div
