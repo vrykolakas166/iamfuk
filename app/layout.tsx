@@ -23,14 +23,40 @@ const dmsans = DM_Sans({
   display: "swap",
 });
 
+async function fetchWeather(): Promise<any> {
+  try {
+    const locationResponse = await fetch(
+      process.env.NEXT_PUBLIC_APP_ENV === "dev"
+        ? "http://ip-api.com/json/"
+        : `https://pro.ipapi.org/api_json/one.php?key=${process.env.IPAPI_KEY}`
+    );
+    const locationData = await locationResponse.json();
+
+    if (locationData) {
+      const { lat, lon } = locationData;
+      const apiKey = process.env.WEATHERAPI_KEY;
+
+      const weatherResponse = await fetch(
+        `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${lat},${lon}`
+      );
+
+      return await weatherResponse.json();
+    } else {
+      console.error("Could not fetch location data.");
+      return {};
+    }
+  } catch (error) {
+    console.error("Error fetching weather data:", error);
+    return {};
+  }
+}
+
 export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const response = await fetch(`${defaultUrl}/api/weather`);
-  if (!response.ok) throw new Error("Failed to fetch weather data");
-  const weatherData = await response.json();
+  const weatherData = await fetchWeather();
 
   return (
     <html lang="en" className={dmsans.className} suppressHydrationWarning>
