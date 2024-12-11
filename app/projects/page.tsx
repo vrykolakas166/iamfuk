@@ -1,8 +1,8 @@
-import { createClient } from "@/utils/supabase/client";
+import { createClient } from "@/utils/supabase/server";
 import ProjectPageClient from "./client";
 
 const fetchProjects = async () => {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data: projects, error } = await supabase.from("projects").select("*");
 
   if (error) {

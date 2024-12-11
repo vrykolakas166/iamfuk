@@ -2,8 +2,13 @@
 
 import { motion } from "framer-motion";
 import { ProjectCard } from "@/components/ui/project-card";
+import LoadingSpinner from "@/components/loading-spinner";
 
 const ProjectPageClient = ({ projects }: { projects: any[] }) => {
+  if (projects.length === 0) {
+    return <LoadingSpinner />; // Show loading spinner if no projects
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0 }}

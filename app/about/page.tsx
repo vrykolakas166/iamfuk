@@ -1,8 +1,8 @@
-import { createClient } from "@/utils/supabase/client";
+import { createClient } from "@/utils/supabase/server";
 import AboutPageClient from "./client";
 
 const fetchTechstacks = async () => {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data: techstacks, error } = await supabase
     .from("techstacks")
     .select("*");
@@ -16,7 +16,7 @@ const fetchTechstacks = async () => {
 };
 
 const AboutPage = async () => {
-  var techstacks = await fetchTechstacks();
+  const techstacks = await fetchTechstacks();
 
   return <AboutPageClient techstacks={techstacks} />;
 };

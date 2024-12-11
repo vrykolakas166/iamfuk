@@ -2,8 +2,13 @@
 
 import { motion } from "framer-motion";
 import { SkillBadge } from "@/components/ui/skill-badge";
+import LoadingSpinner from "@/components/loading-spinner";
 
 const AboutPageClient = ({ techstacks }: { techstacks: any[] }) => {
+  if (techstacks.length === 0) {
+    return <LoadingSpinner />; // Show loading spinner if no projects
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
