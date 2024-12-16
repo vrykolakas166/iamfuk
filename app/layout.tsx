@@ -6,6 +6,7 @@ import { ThemeProvider } from "next-themes";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { RainEffect } from "@/components/effects/RainEffect";
 import { WeatherWidget } from "@/components/ui/weather-widget";
+import Spline from "@splinetool/react-spline";
 import Link from "next/link";
 
 const defaultUrl = process.env.VERCEL_URL
@@ -55,10 +56,12 @@ export default async function RootLayout({
                   </div>
                 </nav>
               </HeaderContainer>
+              <div className="absolute w-[400px] h-[500px] scale-50 -z-10">
+                <Spline scene="https://prod.spline.design/KSMhA1VB1e52MLJN/scene.splinecode" />
+              </div>
               <div className="min-h-screen flex flex-col gap-20 max-w-7xl p-5">
                 {children}
               </div>
-
               <footer className="w-full flex items-center justify-center border-t mx-auto text-center text-xs gap-8 py-16">
                 <p>
                   Developed by{" "}
