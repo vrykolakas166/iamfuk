@@ -56,9 +56,6 @@ export default async function RootLayout({
                   </div>
                 </nav>
               </HeaderContainer>
-              <div className="absolute w-[400px] h-[500px] scale-50 -z-10">
-                <Spline scene="https://prod.spline.design/KSMhA1VB1e52MLJN/scene.splinecode" />
-              </div>
               <div className="min-h-screen flex flex-col gap-20 max-w-7xl p-5">
                 {children}
               </div>
