@@ -14,7 +14,6 @@ const fetchTechstacks = async () => {
     return [];
   }
 
-  console.log("Techstacks:", techstacks);
   return techstacks || [];
 };
 

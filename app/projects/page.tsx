@@ -12,7 +12,6 @@ const fetchProjects = async () => {
     return [];
   }
 
-  console.log("Projects:", projects);
   return projects || [];
 };
 
