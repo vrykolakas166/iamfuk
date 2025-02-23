@@ -151,6 +151,8 @@ export const fetchWeather = async () => {
       coordinates.lat = lat;
       coordinates.lon = lon;
     } else {
+      await new Promise((r) => setTimeout(r, 4000));
+
       const locationResponse = await fetch(`${defaultUrl}/api/geo`);
       const locationData = await locationResponse.json();
       const location = locationData.city;
