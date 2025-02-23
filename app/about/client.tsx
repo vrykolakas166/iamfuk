@@ -2,11 +2,11 @@
 
 import { motion } from "framer-motion";
 import { SkillBadge } from "@/components/ui/skill-badge";
-import LoadingSpinner from "@/components/loading-spinner";
+import NoData from "@/components/no-data";
 
 const AboutPageClient = ({ techstacks }: { techstacks: any[] }) => {
   if (techstacks.length === 0) {
-    return <LoadingSpinner />; // Show loading spinner if no projects
+    return <NoData />;
   }
 
   return (
@@ -33,13 +33,24 @@ const AboutPageClient = ({ techstacks }: { techstacks: any[] }) => {
               journey in technology is driven by a constant desire to learn and
               innovate.
             </p>
-            <p className="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
+            <p className="text-gray-600 dark:text-gray-300 mb-2 leading-relaxed">
               I specialize in building scalable website and desktop applications
               and have a strong foundation in both front-end and back-end
               development. My approach combines technical expertise with
               creative problem-solving.
             </p>
-            <div className="flex flex-wrap gap-3 mb-8">
+            <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+              Check out my
+              <a
+                className="text-blue-500 dark:text-blue-400 underline mx-1"
+                href="https://github.com/vrykolakas166"
+                target="_blank"
+              >
+                GitHub profile
+              </a>
+              for more
+            </p>
+            <div className="flex flex-wrap gap-3 my-4">
               {techstacks?.map((skill, index) => (
                 <SkillBadge key={skill.id} skill={skill} index={index} />
               ))}

@@ -38,15 +38,15 @@ const GamePageClient = () => {
           style={{ maxWidth: "100%" }}
           blurDataURL="/assets/games/bacay/hero.jpg"
           placeholder="blur"
-          className="object-contain h-auto"
+          className="object-contain h-auto md:w-[35vw] mx-auto rounded-lg shadow-lg shadow-pink-500/30 my-3"
         />
         <div className="absolute bottom-0 mb-3 w-full text-center text-[2rem] font-bold text-white">
           Có chơi có chịu
         </div>
       </div>
-      <div>
+      <div className="border border-pink-500/30 rounded-lg mt-5">
         <h1 className="text-2xl font-bold text-center my-4">Danh sách</h1>
-        <div className="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-8 gap-2 place-items-center">
+        <div className="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-8 gap-2 place-items-center py-3">
           <div onClick={letsPlay} className="gradient-border-100 gb-flex">
             <div
               className="rounded-lg p-4 relative game-box"

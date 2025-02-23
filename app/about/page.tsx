@@ -19,7 +19,6 @@ const fetchTechstacks = async () => {
 
 const AboutPage = async () => {
   const techstacks = await fetchTechstacks();
-
   return <AboutPageClient techstacks={techstacks} />;
 };
 
