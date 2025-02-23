@@ -139,43 +139,46 @@ export const fetchWeather = async () => {
       ? `https://iamfuk.io.vn`
       : "http://localhost:3000";
 
-  let ip = "0.0.0.0";
+  let coordinates = { lat: 21.02945, lon: 105.854444 }; // Hanoi Capital
+
   try {
-    try {
-      console.log("Fetching user ip...");
-      console.log("defaultUrl", defaultUrl);
-      const currResponse = await fetch(`${defaultUrl}/api/get-ip`);
-      const res = await currResponse.json();
-      ip = res.ip;
-      console.log("UserIP data:", res);
-    } catch (error) {}
-
     console.log("Fetching location data...");
-    console.log("IPAPI_KEY:", process.env.IPAPI_KEY);
-    const locationResponse = await fetch(
-      process.env.NEXT_PUBLIC_APP_ENV === "dev"
-        ? "http://ip-api.com/json/"
-        : `https://pro.ipapi.org/api_json/one.php?key=${process.env.IPAPI_KEY}&ip=${ip}`
-    );
-    const locationData = await locationResponse.json();
-    console.log("Location data:", locationData);
-
-    if (locationData) {
+    if (process.env.NEXT_PUBLIC_APP_ENV === "dev") {
+      const locationResponse = await fetch("http://ip-api.com/json/");
+      const locationData = await locationResponse.json();
+      console.log("Location data:", locationData);
       const { lat, lon } = locationData;
-      const apiKey = process.env.WEATHERAPI_KEY;
-
-      console.log("Fetching weather data...");
-      console.log("WEATHERAPI_KEY:", apiKey);
-      const weatherResponse = await fetch(
-        `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${lat},${lon}`
-      );
-      const weatherData = await weatherResponse.json();
-      console.log("Location data:", weatherData);
-      return weatherData;
+      coordinates.lat = lat;
+      coordinates.lon = lon;
     } else {
-      console.error("Could not fetch location data.");
-      return {};
+      const locationResponse = await fetch(`${defaultUrl}/api/geo`);
+      const locationData = await locationResponse.json();
+      const location = locationData.city;
+      console.log("Location data:", locationData);
+
+      // get lat and long from city name
+      const res = await fetch(
+        `https://api.mapbox.com/search/geocode/v6/forward?q=${location}&access_token=${process.env.MAPBOX_API_KEY}`
+      );
+      const data = await res.json();
+      if (data && data.features.length > 0) {
+        const feature = data.features[0];
+        coordinates.lat = feature.geometry.coordinates[1];
+        coordinates.lon = feature.geometry.coordinates[0];
+      } else {
+        console.error("cannot fetch location data from mapbox");
+      }
     }
+
+    const apiKey = process.env.WEATHERAPI_KEY;
+
+    console.log("Fetching weather data...");
+    const weatherResponse = await fetch(
+      `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${coordinates.lat},${coordinates.lon}`
+    );
+    const weatherData = await weatherResponse.json();
+    console.log("Location data:", weatherData);
+    return weatherData;
   } catch (error) {
     console.error("Error fetching weather data:", error);
     return {};
