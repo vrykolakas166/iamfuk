@@ -8,12 +8,14 @@ import { RainEffect } from "@/components/effects/RainEffect";
 import { WeatherWidget } from "@/components/ui/weather-widget";
 import Link from "next/link";
 import LayoutWrapper from "./layout-wrapper";
+import type { Metadata } from "next";
+import { Toaster } from "sonner";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : "http://localhost:3000";
 
-export const metadata = {
+export const metadata: Metadata = {
   metadataBase: new URL(defaultUrl),
   title: "iamfuk",
   description: "Phuc Pham Hong's portfolio website",
@@ -48,9 +50,11 @@ export default async function RootLayout({
                       <div className="flex gap-5 items-center font-semibold">
                         <Link
                           href={"/"}
-                          className="text-2xl hover:scale-105 transition-all"
+                          className="text-2xl font-bold bg-clip-text transition-all duration-300 cursor-pointer font-heading tracking-tight flex gap-0 hover:gap-2"
                         >
-                          iamfuk.
+                          <span>i</span>
+                          <span>am</span>
+                          <span>fuk.</span>
                         </Link>
                       </div>
                       <HeaderAuth />
@@ -60,7 +64,7 @@ export default async function RootLayout({
                 <div className="min-h-screen w-full flex flex-col gap-20 max-w-7xl p-5">
                   {children}
                 </div>
-                <footer className="w-full flex items-center justify-center border-t mx-auto text-center text-xs gap-8 py-8">
+                <footer className="w-full flex justify-center items-center py-4">
                   <p>
                     Developed by{" "}
                     <a
@@ -77,6 +81,7 @@ export default async function RootLayout({
                 </footer>
               </div>
             </main>
+            <Toaster richColors closeButton position="bottom-right" />
           </LayoutWrapper>
         </ThemeProvider>
       </body>

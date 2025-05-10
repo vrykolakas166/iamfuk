@@ -8,8 +8,8 @@ import { useParams, useRouter } from "next/navigation";
 const GameBaCayPage = () => {
   const router = useRouter();
   const { id } = useParams(); // Get the ID from the dynamic route
-  const [roomName, setRoomName] = useState("");
-  const [betAmount, setBetAmount] = useState<number | "">(""); // Allow empty input;
+  const [roomName, setRoomName] = useState(`Room ${Math.floor(Math.random() * 1000)}`);
+  const [betAmount, setBetAmount] = useState<number | "">(1000); // Default bet amount is 1000
   const [playerName, setPlayerName] = useState("");
   const [players, setPlayers] = useState<Player[]>([]);
 

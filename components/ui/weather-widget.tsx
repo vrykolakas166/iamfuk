@@ -29,7 +29,7 @@ const WeatherWidget: React.FC<WeatherWidgetProps> = ({
         width: "36px",
         height: "36px",
       }}
-      className={`${classNameParam} rounded-2xl p-1 hover:bg-neutral-100 dark:hover:bg-neutral-900 border-2 border-gray-400 dark:border-white/50 text-black dark:text-white text-center flex justify-center items-center`}
+      className={`${classNameParam} rounded-2xl p-1 hover:bg-neutral-100 dark:hover:bg-neutral-900 border-2 border-gray-400 dark:border-white/50 text-black dark:text-white text-center flex justify-center items-center max-[768px]:hidden`}
       transition={{
         duration: 0.5,
         delay: 0,

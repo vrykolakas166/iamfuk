@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import "../../../../game.css";
 import CoverLayout from "../../../../cover";
 import { useEffect, useRef, useState } from "react";
@@ -275,12 +276,20 @@ const GameBaCayEditPage = () => {
           </div>
         </div>
 
-        <input
-          type="submit"
-          className="btn-warning w-[150px] h-[40px] mt-4 hover:shadow-lg hover:shadow-yellow-500/50"
-          value={"CẬP NHẬT"}
-          onClick={updateRoom}
-        />
+        <div className="flex flex-row gap-2 w-full justify-center mt-4">
+          <div
+            onClick={() => roomData && router.push(`/game/bacay/${roomData.id}/lobby`)}
+            className="w-[120px] sm:w-[130px] md:w-[140px] lg:w-[150px] h-[40px] bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-200 rounded-lg flex items-center justify-center text-sm sm:text-base cursor-pointer border border-gray-300 dark:border-gray-600"
+          >
+            Hủy bỏ
+          </div>
+          <div
+            onClick={updateRoom}
+            className="w-[120px] sm:w-[130px] md:w-[140px] lg:w-[150px] h-[40px] bg-yellow-500 hover:bg-yellow-600 text-white transition-colors duration-200 rounded-lg flex items-center justify-center text-sm sm:text-base cursor-pointer border border-yellow-600"
+          >
+            CẬP NHẬT
+          </div>
+        </div>
       </div>
     </CoverLayout>
   );
