@@ -4,6 +4,7 @@ import { encodedRedirect } from "@/utils/utils";
 import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { Provider } from "@supabase/supabase-js";
 
 export const signUpAction = async (formData: FormData) => {
   const email = formData.get("email")?.toString();
@@ -12,11 +13,7 @@ export const signUpAction = async (formData: FormData) => {
   const origin = (await headers()).get("origin");
 
   if (!email || !password) {
-    return encodedRedirect(
-      "error",
-      "/sign-up",
-      "Email and password are required"
-    );
+    throw new Error("Email and password are required");
   }
 
   const { error } = await supabase.auth.signUp({
@@ -29,15 +26,33 @@ export const signUpAction = async (formData: FormData) => {
 
   if (error) {
     console.error(error.code + " " + error.message);
-    return encodedRedirect("error", "/sign-up", error.message);
-  } else {
-    return encodedRedirect(
-      "success",
-      "/sign-up",
-      "Thanks for signing up! Please check your email for a verification link."
-    );
+    throw error;
   }
+
+  return redirect("/");
 };
+
+export const signInByProvider = async (provider: Provider) => {
+  const supabase = await createClient();
+  const origin = (await headers()).get("origin");
+
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: provider,
+    options: {
+      redirectTo: `${origin}/auth/callback`,
+      queryParams: {
+        access_type: 'offline',
+        prompt: 'consent',
+      },
+    },
+  });
+
+  if (error) {
+    throw error;
+  }
+
+  return redirect(data.url);
+}
 
 export const signInAction = async (formData: FormData) => {
   const email = formData.get("email") as string;
@@ -67,7 +82,7 @@ export const forgotPasswordAction = async (formData: FormData) => {
   }
 
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: `${origin}/auth/callback?redirect_to=/protected/reset-password`,
+    redirectTo: `${origin}/auth/callback?redirect_to=/reset-password?email=${encodeURIComponent(email)}`,
   });
 
   if (error) {
@@ -92,23 +107,40 @@ export const forgotPasswordAction = async (formData: FormData) => {
 
 export const resetPasswordAction = async (formData: FormData) => {
   const supabase = await createClient();
-
   const password = formData.get("password") as string;
-  const confirmPassword = formData.get("confirmPassword") as string;
+  const rePassword = formData.get("rePassword") as string;
+  const email = formData.get("email") as string;
 
-  if (!password || !confirmPassword) {
-    encodedRedirect(
+  const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+  if (sessionError || !session) {
+    return encodedRedirect(
       "error",
-      "/protected/reset-password",
+      "/reset-password",
+      "Reset link has expired. Please request a new one."
+    );
+  }
+
+  if (!password || !rePassword) {
+    return encodedRedirect(
+      "error",
+      "/reset-password",
       "Password and confirm password are required"
     );
   }
 
-  if (password !== confirmPassword) {
-    encodedRedirect(
+  if (password !== rePassword) {
+    return encodedRedirect(
       "error",
-      "/protected/reset-password",
+      "/reset-password",
       "Passwords do not match"
+    );
+  }
+
+  if (!email) {
+    return encodedRedirect(
+      "error",
+      "/reset-password",
+      "Invalid reset link"
     );
   }
 
@@ -117,14 +149,14 @@ export const resetPasswordAction = async (formData: FormData) => {
   });
 
   if (error) {
-    encodedRedirect(
+    return encodedRedirect(
       "error",
-      "/protected/reset-password",
-      "Password update failed"
+      "/reset-password",
+      error.message || "Password update failed"
     );
   }
 
-  encodedRedirect("success", "/protected/reset-password", "Password updated");
+  return encodedRedirect("success", "/access", "Password updated successfully");
 };
 
 export const signOutAction = async () => {

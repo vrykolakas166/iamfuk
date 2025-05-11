@@ -106,7 +106,7 @@ export default function MyNavbar({ user }: { user: {} | any }) {
               variant="outline" 
               className="w-full hover:bg-blue-500 hover:text-white dark:hover:bg-blue-600 transition-colors duration-300"
             >
-              <Link href="/sign-in" onClick={() => setIsOpen(false)}>
+              <Link href="/access" onClick={() => setIsOpen(false)}>
                 Access
               </Link>
             </Button>

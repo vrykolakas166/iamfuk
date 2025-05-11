@@ -7,6 +7,7 @@ import { useState, useRef, useEffect } from "react";
 import { Button } from "./ui/button";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { Icon } from "@iconify/react";
 
 interface UserMenuProps {
   isMobile?: boolean;
@@ -15,6 +16,7 @@ interface UserMenuProps {
 
 export default function UserMenu({ isMobile = false, onClose }: UserMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
@@ -37,6 +39,7 @@ export default function UserMenu({ isMobile = false, onClose }: UserMenuProps) {
   };
 
   const handleSignOut = async () => {
+    setLoading(true);
     try {
       const result = await signOutAction();
       // If we get here, it means signOutAction didn't redirect
@@ -46,12 +49,15 @@ export default function UserMenu({ isMobile = false, onClose }: UserMenuProps) {
       if (error.message === 'NEXT_REDIRECT') {
         // This is a successful sign-out
         toast.success('Signed out successfully');
-        router.push('/');
+        onClose?.();
+        router.push('/access');
       } else {
         // This is an actual error
         console.log(error);
         toast.error(error.message || 'Failed to sign out');
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -70,9 +76,9 @@ export default function UserMenu({ isMobile = false, onClose }: UserMenuProps) {
             type="submit" 
             variant="outline" 
             className="w-full hover:bg-blue-500 hover:text-white dark:hover:bg-blue-600 transition-colors duration-300"
-            onClick={handleItemClick}
+            disabled={loading}
           >
-            Sign out
+            {loading ? <Icon icon="eos-icons:three-dots-loading" width={30} /> : 'Sign out'}
           </Button>
         </form>
       </div>
@@ -106,8 +112,9 @@ export default function UserMenu({ isMobile = false, onClose }: UserMenuProps) {
                 type="submit"
                 className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
                 role="menuitem"
+                disabled={loading}
               >
-                Sign out
+                {loading ? <Icon icon="eos-icons:three-dots-loading" width={30} /> : 'Sign out'}
               </button>
             </form>
           </div>

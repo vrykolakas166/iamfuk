@@ -51,7 +51,7 @@ const GTAVIPage = () => {
           <div className="absolute top-5 left-5">
             <GTAVILogo />
           </div>
-          <div className="absolute bottom-5 right-5 w-[250px] aspect-video">
+          <div className="absolute bottom-5 right-5 w-[150px] sm:w-[250px] aspect-video max-[319px]:hidden">
             <iframe
               width="100%"
               height="100%"
@@ -63,25 +63,25 @@ const GTAVIPage = () => {
             />
           </div>
         </div>
-        
+
         <div className="prose max-w-none dark:prose-invert">
           <div className="text-center mt-8">
-            <div className="grid grid-cols-4 gap-4 max-w-2xl mx-auto">
+            <div className="grid grid-cols-4 gap-4 max-w-2xl mx-auto max-[319px]:hidden">
               <div className="bg-gray-200 dark:bg-gray-800 p-4 rounded-lg shadow-sm dark:shadow-gray-700/30">
-                <div className="text-3xl font-bold text-gray-900 dark:text-gray-100">{timeLeft.days}</div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">Days</div>
+                <div className="text-xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100 flex items-center justify-center">{timeLeft.days}<span className="sm:hidden block">d</span></div>
+                <div className="sm:block hidden text-sm text-gray-600 dark:text-gray-400">Days</div>
               </div>
               <div className="bg-gray-200 dark:bg-gray-800 p-4 rounded-lg shadow-sm dark:shadow-gray-700/30">
-                <div className="text-3xl font-bold text-gray-900 dark:text-gray-100">{timeLeft.hours}</div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">Hours</div>
+                <div className="text-xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100 flex items-center justify-center">{timeLeft.hours}<span className="sm:hidden block">h</span></div>
+                <div className="sm:block hidden text-sm text-gray-600 dark:text-gray-400">Hours</div>
               </div>
               <div className="bg-gray-200 dark:bg-gray-800 p-4 rounded-lg shadow-sm dark:shadow-gray-700/30">
-                <div className="text-3xl font-bold text-gray-900 dark:text-gray-100">{timeLeft.minutes}</div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">Minutes</div>
+                <div className="text-xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100 flex items-center justify-center">{timeLeft.minutes}<span className="sm:hidden block">m</span></div>
+                <div className="sm:block hidden text-sm text-gray-600 dark:text-gray-400">Minutes</div>
               </div>
               <div className="bg-gray-200 dark:bg-gray-800 p-4 rounded-lg shadow-sm dark:shadow-gray-700/30">
-                <div className="text-3xl font-bold text-gray-900 dark:text-gray-100">{timeLeft.seconds}</div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">Seconds</div>
+                <div className="text-xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100 flex items-center justify-center">{timeLeft.seconds}<span className="sm:hidden block">s</span></div>
+                <div className="sm:block hidden text-sm text-gray-600 dark:text-gray-400">Seconds</div>
               </div>
             </div>
             <p className="mt-4 text-gray-600 dark:text-gray-400">Until May 26, 2026</p>
