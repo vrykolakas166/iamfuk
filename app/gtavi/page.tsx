@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import GTAVILogo from "@/components/gtavi-logo";
+import { Skeleton } from '../../components/ui/skeleton';
 
 const GTAVIPage = () => {
   const router = useRouter();
@@ -13,6 +14,7 @@ const GTAVIPage = () => {
     minutes: 0,
     seconds: 0
   });
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const targetDate = new Date('2026-05-26T00:00:00');
@@ -41,26 +43,32 @@ const GTAVIPage = () => {
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-4xl mx-auto">
         <div className="relative w-full h-[400px] mb-8">
-          <Image
-            src="/assets/gtavi.jpg"
-            alt="GTA VI"
-            fill
-            className="object-cover rounded-lg"
-            priority
-          />
-          <div className="absolute top-5 left-5">
+          <div className="absolute inset-0">
+            <Skeleton className={`w-full h-full rounded-lg ${!isLoading ? 'hidden' : ''}`} />
+            <Image
+              src="/assets/gtavi.jpg"
+              alt="GTA VI"
+              fill
+              className={`object-cover rounded-lg ${isLoading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300`}
+              priority
+              onLoadingComplete={() => setIsLoading(false)}
+            />
+          </div>
+          <div className="absolute top-5 left-5 z-10">
             <GTAVILogo />
           </div>
-          <div className="absolute bottom-5 right-5 w-[150px] sm:w-[250px] aspect-video max-[319px]:hidden">
-            <iframe
-              width="100%"
-              height="100%"
-              src="https://www.youtube.com/embed/VQRLujxTm3c"
-              title="GTA VI Trailer"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              className="rounded-lg shadow-lg"
-            />
+          <div className="absolute bottom-5 right-5 w-[150px] sm:w-[250px] aspect-video max-[319px]:hidden z-10">
+            {!isLoading && (
+              <iframe
+                width="100%"
+                height="100%"
+                src="https://www.youtube.com/embed/VQRLujxTm3c"
+                title="GTA VI Trailer"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="rounded-lg shadow-lg"
+              />
+            )}
           </div>
         </div>
 

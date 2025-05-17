@@ -6,6 +6,27 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { Provider } from "@supabase/supabase-js";
 
+const DEFAULT_ROLE_UUID = '8b5be904-9f7b-4a68-b80c-28029036c427';
+
+async function assignRoleToUser(userUuid: string) {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from('userRoles')
+    .insert([
+      {
+        userUuid,
+        roleUuid: DEFAULT_ROLE_UUID
+      },
+    ])
+    .select()
+
+  if (error) {
+    console.error('Failed to assign role to user:', error);
+    throw new Error('Failed to assign role to user');
+  }
+}
+
 export const signUpAction = async (formData: FormData) => {
   const email = formData.get("email")?.toString();
   const password = formData.get("password")?.toString();
@@ -16,7 +37,7 @@ export const signUpAction = async (formData: FormData) => {
     throw new Error("Email and password are required");
   }
 
-  const { error } = await supabase.auth.signUp({
+  const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
@@ -24,9 +45,20 @@ export const signUpAction = async (formData: FormData) => {
     },
   });
 
+
   if (error) {
     console.error(error.code + " " + error.message);
     throw error;
+  }
+  // Assign role to the new user
+  if (data.user) {
+    try {
+      await assignRoleToUser(data.user.id)
+    } catch (error) {
+      console.error('Failed to assign role:', error);
+      // We don't throw here because the user is already created
+      // We can handle this error separately if needed
+    }
   }
 
   return redirect("/");
@@ -162,7 +194,7 @@ export const resetPasswordAction = async (formData: FormData) => {
 export const signOutAction = async () => {
   const supabase = await createClient();
   await supabase.auth.signOut();
-  return redirect("/sign-in");
+  return redirect("/access");
 };
 
 export const fetchWeather = async () => {

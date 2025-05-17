@@ -1,8 +1,12 @@
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
-import { MenuClient } from "./menu-client";
+import ClientLayout from "./client-layout";
 
-export default async function ProtectedPage() {
+export default async function ProtectedLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const supabase = await createClient();
 
   const {
@@ -13,9 +17,5 @@ export default async function ProtectedPage() {
     return redirect("/access");
   }
 
-  return (
-    <div className="flex-1 w-full flex flex-col">
-      <MenuClient />
-    </div>
-  );
-}
+  return <ClientLayout user={user}>{children}</ClientLayout>;
+} 

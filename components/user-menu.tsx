@@ -69,7 +69,7 @@ export default function UserMenu({ isMobile = false, onClose }: UserMenuProps) {
           href="/protected"
           onClick={handleItemClick}
         >
-          Me
+          Dashboard
         </Link>
         <form action={handleSignOut} className="w-full mt-2">
           <Button 
@@ -105,7 +105,7 @@ export default function UserMenu({ isMobile = false, onClose }: UserMenuProps) {
               role="menuitem"
               onClick={() => setIsOpen(false)}
             >
-              Me
+              Dashboard
             </Link>
             <form action={handleSignOut}>
               <button
