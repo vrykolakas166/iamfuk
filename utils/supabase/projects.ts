@@ -50,16 +50,20 @@ export async function createProject(project: {
 }) {
   const supabase = await createClient();
   
-  // Create project with tech tags as a simple string
+  // Format dates to ISO string and handle empty end_date
+  const formattedProject = {
+    ...project,
+    start_date: project.start_date ? new Date(project.start_date).toISOString() : undefined,
+    end_date: project.end_date ? new Date(project.end_date).toISOString() : undefined,
+    techtags: project.techtags.split(',')
+      .map(tag => tag.trim())
+      .filter(Boolean)
+      .join(', ')
+  };
+  
   const { data, error } = await supabase
     .from('projects')
-    .insert([{
-      ...project,
-      techtags: project.techtags.split(',')
-        .map(tag => tag.trim())
-        .filter(Boolean)
-        .join(', ')
-    }])
+    .insert([formattedProject])
     .select()
     .single();
 
@@ -95,8 +99,14 @@ export async function updateProject(id: number, updates: Partial<{
     throw new Error(`Project with ID ${id} not found`);
   }
 
-  // Prepare update data
+  // Prepare update data with formatted dates
   const updateData = { ...updates };
+  if (updates.start_date !== undefined) {
+    updateData.start_date = updates.start_date ? new Date(updates.start_date).toISOString() : undefined;
+  }
+  if (updates.end_date !== undefined) {
+    updateData.end_date = updates.end_date ? new Date(updates.end_date).toISOString() : undefined;
+  }
   if (updates.techtags !== undefined) {
     updateData.techtags = updates.techtags.split(',')
       .map(tag => tag.trim())

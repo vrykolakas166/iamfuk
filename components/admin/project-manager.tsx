@@ -340,6 +340,7 @@ export function ProjectManager() {
                   value={formData.team_size || 1}
                   onChange={(e) => setFormData({ ...formData, team_size: parseInt(e.target.value) || 1 })}
                   min="1"
+                  max="2000000000"
                   required
                 />
               </div>
