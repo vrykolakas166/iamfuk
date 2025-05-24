@@ -1,13 +1,13 @@
 'use client';
 
-import { Icon } from '@iconify/react';
 import { useState } from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
-import { PageLayout } from "@/components/page-layout";
+import { PageLayout } from "@/components/layout/page-layout";
+import { Settings, Loader2, Save, Shield, Palette, UserCog, HelpCircle } from 'lucide-react';
 
 type Field = {
   id: string;
@@ -56,6 +56,13 @@ const initialSettings: SettingSection[] = [
     ],
   },
 ];
+
+const iconMap: { [key: string]: React.ComponentType<any> } = {
+  'mdi:account-cog': UserCog,
+  'mdi:palette': Palette,
+  'mdi:shield-lock': Shield,
+  'mdi:cog': Settings,
+};
 
 export default function SettingsPage() {
   const [settings, setSettings] = useState(initialSettings);
@@ -112,48 +119,51 @@ export default function SettingsPage() {
     <PageLayout
       title="Settings"
       icon="mdi:cog"
-      maxWidth="4xl"
+      maxWidth="7xl"
     >
       <div className="space-y-6">
-        {settings.map((section) => (
-          <Card key={section.id}>
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <Icon icon={section.icon} className="w-6 h-6 text-foreground" />
-                <CardTitle>{section.title}</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {section.fields.map((field) => (
-                <div key={field.id} className="flex items-center justify-between">
-                  <label className="font-medium">{field.label}</label>
-                  {field.type === 'select' ? (
-                    <Select
-                      value={field.value as string}
-                      onValueChange={(value) => handleSelectChange(section.id, field.id, value)}
-                    >
-                      <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder={`Select ${field.label}`} />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {field.options?.map((option) => (
-                          <SelectItem key={option} value={option}>
-                            {option}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  ) : (
-                    <Switch
-                      checked={field.value as boolean}
-                      onCheckedChange={(checked) => handleToggleChange(section.id, field.id, checked)}
-                    />
-                  )}
+        {settings.map((section) => {
+          const SectionIcon = iconMap[section.icon] || HelpCircle;
+          return (
+            <Card key={section.id}>
+              <CardHeader>
+                <div className="flex items-center gap-3">
+                  <SectionIcon className="w-6 h-6 text-foreground" />
+                  <CardTitle>{section.title}</CardTitle>
                 </div>
-              ))}
-            </CardContent>
-          </Card>
-        ))}
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {section.fields.map((field) => (
+                  <div key={field.id} className="flex items-center justify-between">
+                    <label className="font-medium">{field.label}</label>
+                    {field.type === 'select' ? (
+                      <Select
+                        value={field.value as string}
+                        onValueChange={(value) => handleSelectChange(section.id, field.id, value)}
+                      >
+                        <SelectTrigger className="w-[180px]">
+                          <SelectValue placeholder={`Select ${field.label}`} />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {field.options?.map((option) => (
+                            <SelectItem key={option} value={option}>
+                              {option}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    ) : (
+                      <Switch
+                        checked={field.value as boolean}
+                        onCheckedChange={(checked: boolean) => handleToggleChange(section.id, field.id, checked)}
+                      />
+                    )}
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          );
+        })}
 
         <div className="flex justify-end">
           <Button 
@@ -163,12 +173,12 @@ export default function SettingsPage() {
           >
             {isSaving ? (
               <>
-                <Icon icon="mdi:loading" className="w-5 h-5 animate-spin" />
+                <Loader2 className="w-5 h-5 animate-spin" />
                 Saving...
               </>
             ) : (
               <>
-                <Icon icon="mdi:content-save" className="w-5 h-5" />
+                <Save className="w-5 h-5" />
                 Save Changes
               </>
             )}

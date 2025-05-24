@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import '../public/css/cat-button.css';
-import { Button } from './ui/button';
+import '../../../public/css/cat-button.css';
+import { Button } from '../../ui/button';
 import { useTyping } from './typing-context';
 
 const MAX_RADIUS = 2;

@@ -1,9 +1,9 @@
 'use client';
 
-import { Icon } from '@iconify/react';
+import { Bell, Mail, AlertCircle, Info } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { PageLayout } from "@/components/page-layout";
+import { PageLayout } from "@/components/layout/page-layout";
 
 const notifications = [
   {
@@ -78,7 +78,7 @@ export default function NotificationsPage() {
       onClick={handleMarkAllAsRead}
       className="gap-2"
     >
-      <Icon icon="mdi:check-all" className="w-5 h-5" />
+      <Bell />
       Mark all as read
     </Button>
   );
@@ -109,7 +109,7 @@ export default function NotificationsPage() {
                 ${notification.type === 'success' ? 'bg-green-500/10' : ''}
                 ${notification.type === 'warning' ? 'bg-yellow-500/10' : ''}
               `}>
-                <Icon icon={notification.icon} className="w-6 h-6 text-foreground" />
+                <Bell />
               </div>
               <div className="flex-1">
                 <div className="flex items-center justify-between">

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import GTAVILogo from "@/components/gtavi-logo";
+import GTAVILogo from "@/components/features/game/gtavi-logo";
 import { Skeleton } from '../../components/ui/skeleton';
 
 const GTAVIPage = () => {

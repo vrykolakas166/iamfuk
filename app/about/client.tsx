@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { SkillBadge } from "@/components/ui/skill-badge";
-import NoData from "@/components/no-data";
+import NoData from "@/components/layout/no-data";
 
 const AboutPageClient = ({ techstacks }: { techstacks: any[] }) => {
   if (techstacks.length === 0) {

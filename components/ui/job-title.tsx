@@ -1,7 +1,7 @@
 'use client';
 
 import React from "react";
-import { useTyping } from "../typing-context";
+import { useTyping } from "../features/hero/typing-context";
 
 const JobTitle = () => {
   const { displayedText } = useTyping();

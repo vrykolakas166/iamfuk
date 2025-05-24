@@ -1,13 +1,12 @@
 'use client';
 
 import { signOutAction } from "@/app/actions";
-import { User } from "lucide-react";
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
-import { Button } from "./ui/button";
+import { Button } from "../../ui/button";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { Icon } from "@iconify/react";
+import { Loader2, User } from "lucide-react";
 
 interface UserMenuProps {
   isMobile?: boolean;
@@ -53,7 +52,6 @@ export default function UserMenu({ isMobile = false, onClose }: UserMenuProps) {
         router.push('/access');
       } else {
         // This is an actual error
-        console.log(error);
         toast.error(error.message || 'Failed to sign out');
       }
     } finally {
@@ -78,7 +76,7 @@ export default function UserMenu({ isMobile = false, onClose }: UserMenuProps) {
             className="w-full hover:bg-blue-500 hover:text-white dark:hover:bg-blue-600 transition-colors duration-300"
             disabled={loading}
           >
-            {loading ? <Icon icon="eos-icons:three-dots-loading" width={30} /> : 'Sign out'}
+            {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Sign out'}
           </Button>
         </form>
       </div>
@@ -114,7 +112,7 @@ export default function UserMenu({ isMobile = false, onClose }: UserMenuProps) {
                 role="menuitem"
                 disabled={loading}
               >
-                {loading ? <Icon icon="eos-icons:three-dots-loading" width={30} /> : 'Sign out'}
+                {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Sign out'}
               </button>
             </form>
           </div>

@@ -5,6 +5,8 @@ import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { Provider } from "@supabase/supabase-js";
+import { getCurrentUserRole, hasRole, hasAnyRole } from '@/utils/supabase/roles';
+import { canAccessPage, getAccessiblePages } from '@/utils/supabase/page-access';
 
 const DEFAULT_ROLE_UUID = '8b5be904-9f7b-4a68-b80c-28029036c427';
 
@@ -206,11 +208,9 @@ export const fetchWeather = async () => {
   let coordinates = { lat: 21.02945, lon: 105.854444 }; // Hanoi Capital
 
   try {
-    console.log("Fetching location data...");
     if (process.env.NEXT_PUBLIC_APP_ENV === "dev") {
       const locationResponse = await fetch("http://ip-api.com/json/");
       const locationData = await locationResponse.json();
-      console.log("Location data:", locationData);
       const { lat, lon } = locationData;
       coordinates.lat = lat;
       coordinates.lon = lon;
@@ -220,7 +220,6 @@ export const fetchWeather = async () => {
       const locationResponse = await fetch(`${defaultUrl}/api/geo`);
       const locationData = await locationResponse.json();
       const location = locationData.city;
-      console.log("Location data:", locationData);
 
       // get lat and long from city name
       const res = await fetch(
@@ -238,15 +237,33 @@ export const fetchWeather = async () => {
 
     const apiKey = process.env.WEATHERAPI_KEY;
 
-    console.log("Fetching weather data...");
     const weatherResponse = await fetch(
       `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${coordinates.lat},${coordinates.lon}`
     );
     const weatherData = await weatherResponse.json();
-    console.log("Location data:", weatherData);
     return weatherData;
   } catch (error) {
     console.error("Error fetching weather data:", error);
     return {};
   }
+};
+
+export const getCurrentUserRoleAction = async () => {
+  return await getCurrentUserRole();
+};
+
+export const checkUserRole = async (roleName: string) => {
+  return await hasRole(roleName);
+};
+
+export const checkUserRoles = async (roleNames: string[]) => {
+  return await hasAnyRole(roleNames);
+};
+
+export const checkPageAccess = async (pageKey: string) => {
+  return await canAccessPage(pageKey as any);
+};
+
+export const getUserAccessiblePages = async () => {
+  return await getAccessiblePages();
 };

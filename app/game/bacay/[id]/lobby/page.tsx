@@ -2,7 +2,7 @@
 
 import "../../../game.css";
 import CoverLayout from "@/app/game/cover";
-import GamingPlayer from "@/components/gaming-player";
+import GamingPlayer from "@/components/features/game/gaming-player";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
@@ -123,7 +123,6 @@ const GameBaCayStartPage = () => {
   const logPlayerInfo = () => {
     if (!roomData?.players) return;
 
-    console.log('=== Player Information ===');
     const currentGame = roomData.games?.at(-1);
     const dealer = roomData.players.find(p => p.isDealer);
     const dealerGameDetail = currentGame?.gameDetails.find(
@@ -526,7 +525,6 @@ const GameBaCayStartPage = () => {
       const gameDetail = currentGame.gameDetails.find(
         (gd) => gd.playerId === player.id
       );
-      console.log(index);
       if (gameDetail) {
         gameDetail.rankWhenEqual = index;
       } else {

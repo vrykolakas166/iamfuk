@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ProjectCard } from "@/components/ui/project-card";
-import NoData from "@/components/no-data";
+import NoData from "@/components/layout/no-data";
 
 const ProjectPageClient = ({ projects }: { projects: any[] }) => {
   if (projects.length === 0) {

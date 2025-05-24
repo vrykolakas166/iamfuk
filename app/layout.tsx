@@ -1,9 +1,9 @@
 import "./globals.css";
 import { DM_Sans } from "next/font/google";
-import HeaderAuth from "@/components/header-auth";
-import { HeaderContainer } from "@/components/header-container";
+import HeaderAuth from "@/components/layout/header/header-auth";
+import { HeaderContainer } from "@/components/layout/header/header-container";
 import { ThemeProvider } from "next-themes";
-import { ThemeSwitcher } from "@/components/theme-switcher";
+import { ThemeSwitcher } from "@/components/layout/theme-switcher";
 import { RainEffect } from "@/components/effects/RainEffect";
 import { WeatherWidget } from "@/components/ui/weather-widget";
 import Link from "next/link";
@@ -50,7 +50,7 @@ export default async function RootLayout({
                       <div className="flex gap-5 items-center font-semibold">
                         <Link
                           href={"/"}
-                          className="text-2xl font-bold bg-clip-text transition-all duration-300 cursor-pointer font-heading tracking-tight flex gap-0 hover:gap-2"
+                          className="text-2xl font-bold bg-clip-text transition-all duration-300 cursor-pointer font-heading tracking-tight flex gap-0 hover:gap-2 select-none outline-none"
                         >
                           <span>i</span>
                           <span>am</span>

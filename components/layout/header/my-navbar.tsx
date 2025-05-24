@@ -2,10 +2,10 @@
 
 import { signOutAction } from "@/app/actions";
 import Link from "next/link";
-import { Button } from "./ui/button";
-import { Menu, X } from "lucide-react";
+import { Button } from "../../ui/button";
 import { useState } from "react";
 import UserMenu from "./user-menu";
+import { Menu, X } from "lucide-react";
 
 export default function MyNavbar({ user }: { user: {} | any }) {
   const [isOpen, setIsOpen] = useState(false);

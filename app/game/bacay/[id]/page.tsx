@@ -42,7 +42,6 @@ const GameBaCayPage = () => {
     });
 
     setPlayerName("");
-    console.log("players", players);
   };
 
   const removePlayer = (name: string) => {
@@ -108,7 +107,6 @@ const GameBaCayPage = () => {
 
     // save info to localStorage
     localStorage.setItem("on-going", JSON.stringify(newRoom));
-    console.log("ok");
 
     // move to lobby page
     router.push(`/game/bacay/${id}/lobby`);

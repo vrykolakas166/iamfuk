@@ -1,8 +1,8 @@
 'use client';
 
-import { Icon } from '@iconify/react';
+import { BarChart, LineChart, PieChart, TrendingUp, Users, Activity, DollarSign, ShoppingCart } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { PageLayout } from "@/components/page-layout";
+import { PageLayout } from "@/components/layout/page-layout";
 
 const stats = [
   { label: 'Total Views', value: '12,345', icon: 'mdi:eye' },
@@ -48,7 +48,7 @@ export default function AnalyticsPage() {
             >
               <div className="flex items-center gap-4">
                 <div className="p-2 rounded-lg bg-foreground/5">
-                  <Icon icon={stat.icon} className="w-6 h-6 text-foreground" />
+                  <BarChart />
                 </div>
                 <div>
                   <p className="text-sm text-foreground/60">{stat.label}</p>
@@ -65,7 +65,7 @@ export default function AnalyticsPage() {
             <div className="space-y-4">
               {[1, 2, 3].map((i) => (
                 <div key={i} className="flex items-center gap-4 p-3 rounded-lg bg-foreground/5">
-                  <Icon icon="mdi:clock-outline" className="w-5 h-5 text-foreground/60" />
+                  <Activity />
                   <div>
                     <p className="font-medium">Activity {i}</p>
                     <p className="text-sm text-foreground/60">2 hours ago</p>

@@ -1,11 +1,12 @@
 'use client';
 
-import { Icon } from "@iconify/react";
 import { useEffect, useState } from "react";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { PageLayout } from "@/components/page-layout";
+import { PageLayout } from "@/components/layout/page-layout";
+import { Shield, Lock, Key, Eye, EyeOff } from 'lucide-react';
+import { Icon } from "@iconify/react";
 
 // Sample data - in real app, this would come from an API
 const sampleSettings = [

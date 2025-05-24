@@ -1,9 +1,9 @@
 'use client';
 
-import { Icon } from "@iconify/react";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { PageLayout } from "@/components/page-layout";
+import { PageLayout } from "@/components/layout/page-layout";
+import { FileText, Download, Trash, Loader2 } from 'lucide-react';
 
 // Sample data - in real app, this would come from an API
 const sampleFiles = [
@@ -65,7 +65,7 @@ export default function DocumentsPage() {
 
   const uploadButton = (
     <Button className="gap-2">
-      <Icon icon="mdi:upload" className="w-5 h-5" />
+      <FileText className="w-5 h-5" />
       Upload
     </Button>
   );
@@ -90,7 +90,7 @@ export default function DocumentsPage() {
               className="flex items-center gap-4 p-4 rounded-lg bg-foreground/5 hover:bg-foreground/10 transition-colors cursor-pointer group"
             >
               <div className="p-2 rounded-lg bg-foreground/5">
-                <Icon icon={file.icon} className="w-6 h-6 text-foreground" />
+                <FileText className="w-6 h-6 text-foreground" />
               </div>
               <div className="flex-1 min-w-0">
                 <div className="font-medium truncate">{file.name}</div>
@@ -99,7 +99,7 @@ export default function DocumentsPage() {
                 </div>
               </div>
               <button className="p-2 rounded-lg opacity-0 group-hover:opacity-100 hover:bg-foreground/10 transition-all">
-                <Icon icon="mdi:dots-vertical" className="w-5 h-5 text-foreground/60" />
+                <FileText className="w-5 h-5 text-foreground/60" />
               </button>
             </div>
           ))}

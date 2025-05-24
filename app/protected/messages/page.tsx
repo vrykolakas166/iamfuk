@@ -1,8 +1,8 @@
 'use client';
 
-import { Icon } from "@iconify/react";
+import { MessageSquare, Send, User, Loader2 } from 'lucide-react';
 import { useEffect, useState } from "react";
-import { PageLayout } from "@/components/page-layout";
+import { PageLayout } from "@/components/layout/page-layout";
 
 const messages = [
   {

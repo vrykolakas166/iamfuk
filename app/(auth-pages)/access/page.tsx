@@ -7,6 +7,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { Input } from '@/components/ui/input';
+import { LogIn, User, Mail, Lock, Loader2, Eye, EyeOff } from 'lucide-react';
 import { Icon } from '@iconify/react';
 import { signInAction, signUpAction, signInByProvider, forgotPasswordAction } from '@/app/actions';
 import { Provider } from '@supabase/supabase-js';
@@ -239,21 +240,23 @@ export default function Access() {
                             <h1 className="font-semibold my-2">Create Account</h1>
                             <div className="flex gap-4">
                                 {[
-                                    { icon: "logos:microsoft-icon", provider: "microsoft", enabled: false },
-                                    { icon: "devicon:google", provider: "google", enabled: false },
-                                    { icon: "skill-icons:discord", provider: "discord", enabled: true },
-                                    { icon: "mdi:github", provider: "github", enabled: true }
-                                ].map(({ icon, provider, enabled }) => (
-                                    <Icon 
-                                        key={icon} 
+                                    { icon: "logos:microsoft-icon", provider: "microsoft", enabled: false, label: "Microsoft" },
+                                    { icon: "devicon:google", provider: "google", enabled: false, label: "Google" },
+                                    { icon: "skill-icons:discord", provider: "discord", enabled: true, label: "Discord" },
+                                    { icon: "mdi:github", provider: "github", enabled: true, label: "GitHub" }
+                                ].map(({ icon, provider, enabled, label }) => (
+                                    <button
+                                        key={provider}
+                                        type="button"
                                         className={clsx(
-                                            "provider-log",
+                                            "p-2 rounded-lg hover:bg-foreground/5 transition-colors",
                                             !enabled && "opacity-50 cursor-not-allowed"
                                         )}
-                                        icon={icon} 
-                                        width={30} 
-                                        onClick={() => enabled ? handleSignInByProvider(provider) : toast.info(ERRORS.SERVICES_NOT_AVAILABLE)} 
-                                    />
+                                        onClick={() => enabled ? handleSignInByProvider(provider) : toast.info(ERRORS.SERVICES_NOT_AVAILABLE)}
+                                        title={label}
+                                    >
+                                        <Icon icon={icon} className="w-6 h-6" />
+                                    </button>
                                 ))}
                             </div>
                             <div className="flex items-center justify-center gap-2">
@@ -288,7 +291,7 @@ export default function Access() {
                                         className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
                                         onClick={() => setShowPassword(!showPassword)}
                                     >
-                                        <Icon icon={showPassword ? "mdi:eye-off" : "mdi:eye"} width={20} />
+                                        {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                                     </button>
                                 </div>
                                 {errors.password && <span className="text-[12px] text-red-500">{errors.password}</span>}
@@ -309,13 +312,13 @@ export default function Access() {
                                         className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
                                         onClick={() => setShowRePassword(!showRePassword)}
                                     >
-                                        <Icon icon={showRePassword ? "mdi:eye-off" : "mdi:eye"} width={20} />
+                                        {showRePassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                                     </button>
                                 </div>
                                 {errors.rePassword && <span className="text-[12px] text-red-500">{errors.rePassword}</span>}
                             </div>
                             <Button type="submit" className="w-[100px] mt-2" disabled={!isValidSignUp()}>
-                                {!loading ? 'Sign Up' : <Icon icon="eos-icons:three-dots-loading" width={30} />}
+                                {!loading ? 'Sign Up' : <Loader2 className="animate-spin" width={30} />}
                             </Button>
                             <span className="min-[769px]:hidden text-xs mt-3">
                                 Already had an account ?{' '}
@@ -329,21 +332,23 @@ export default function Access() {
                             <h1 className="font-semibold my-2">Sign in</h1>
                             <div className="flex gap-4">
                                 {[
-                                    { icon: "logos:microsoft-icon", provider: "microsoft", enabled: false },
-                                    { icon: "devicon:google", provider: "google", enabled: false },
-                                    { icon: "skill-icons:discord", provider: "discord", enabled: true },
-                                    { icon: "mdi:github", provider: "github", enabled: true }
-                                ].map(({ icon, provider, enabled }) => (
-                                    <Icon 
-                                        key={icon} 
+                                    { icon: "logos:microsoft-icon", provider: "microsoft", enabled: false, label: "Microsoft" },
+                                    { icon: "devicon:google", provider: "google", enabled: false, label: "Google" },
+                                    { icon: "skill-icons:discord", provider: "discord", enabled: true, label: "Discord" },
+                                    { icon: "mdi:github", provider: "github", enabled: true, label: "GitHub" }
+                                ].map(({ icon, provider, enabled, label }) => (
+                                    <button
+                                        key={provider}
+                                        type="button"
                                         className={clsx(
-                                            "provider-log",
+                                            "p-2 rounded-lg hover:bg-foreground/5 transition-colors",
                                             !enabled && "opacity-50 cursor-not-allowed"
                                         )}
-                                        icon={icon} 
-                                        width={30} 
-                                        onClick={() => enabled ? handleSignInByProvider(provider) : toast.info(ERRORS.SERVICES_NOT_AVAILABLE)} 
-                                    />
+                                        onClick={() => enabled ? handleSignInByProvider(provider) : toast.info(ERRORS.SERVICES_NOT_AVAILABLE)}
+                                        title={label}
+                                    >
+                                        <Icon icon={icon} className="w-6 h-6" />
+                                    </button>
                                 ))}
                             </div>
                             <div className="flex items-center justify-center gap-4">
@@ -376,7 +381,7 @@ export default function Access() {
                                         className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
                                         onClick={() => setShowPassword(!showPassword)}
                                     >
-                                        <Icon icon={showPassword ? "mdi:eye-off" : "mdi:eye"} width={20} />
+                                        {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                                     </button>
                                 </div>
                                 {errors.password && <span className="text-[12px] text-red-500">{errors.password}</span>}
@@ -392,7 +397,7 @@ export default function Access() {
                                 </a>
                             </div>
                             <Button type="submit" className="w-[100px]" disabled={!isValidSignIn()}>
-                                {!loading ? 'Sign In' : <Icon icon="eos-icons:three-dots-loading" width={30} />}
+                                {!loading ? 'Sign In' : <Loader2 className="animate-spin" width={30} />}
                             </Button>
                             <span className="min-[769px]:hidden text-xs mt-3">
                                 Haven't had an account ?{' '}
@@ -454,7 +459,7 @@ export default function Access() {
                                 disabled={forgotPasswordLoading || !forgotPasswordEmail}
                             >
                                 {forgotPasswordLoading ? (
-                                    <Icon icon="eos-icons:three-dots-loading" width={30} />
+                                    <Loader2 className="animate-spin" width={30} />
                                 ) : (
                                     'Send Reset Link'
                                 )}

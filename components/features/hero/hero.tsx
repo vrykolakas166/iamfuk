@@ -1,11 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { JobTitle } from "./ui/job-title";
+import { JobTitle } from "../../ui/job-title";
 import CatButton from "./cat-button";
 import { TypingProvider } from "./typing-context";
 
-export default function Header() {
+export default function Hero() {
   return (
     <motion.div
       initial={{ opacity: 0 }}

@@ -1,8 +1,17 @@
 'use client';
 
-import { Icon } from "@iconify/react";
-import { useEffect, useState } from "react";
-import { PageLayout } from "@/components/page-layout";
+import React, { useEffect, useState } from "react";
+import { 
+  HelpCircle, 
+  Mail, 
+  ChevronDown, 
+  Key, 
+  Shield, 
+  MessageSquare, 
+  BookOpen, 
+  MessageCircle 
+} from 'lucide-react';
+import { PageLayout } from "@/components/layout/page-layout";
 
 // Sample data - in real app, this would come from an API
 const sampleFaqs = [
@@ -10,19 +19,19 @@ const sampleFaqs = [
     id: 1,
     question: 'How do I reset my password?',
     answer: 'You can reset your password by clicking on the "Forgot Password" link on the login page. You will receive an email with instructions to reset your password.',
-    icon: 'mdi:key',
+    icon: Key,
   },
   {
     id: 2,
     question: 'How can I enable two-factor authentication?',
     answer: 'Go to the Security settings page and toggle on Two-Factor Authentication. You will be guided through the setup process.',
-    icon: 'mdi:shield-lock',
+    icon: Shield,
   },
   {
     id: 3,
     question: 'How do I contact support?',
     answer: 'You can reach our support team by email at support@example.com or by using the contact form below.',
-    icon: 'mdi:help-circle',
+    icon: HelpCircle,
   },
 ];
 
@@ -31,21 +40,21 @@ const sampleSupportOptions = [
     id: 1,
     title: 'Email Support',
     description: 'Get help via email',
-    icon: 'mdi:email',
+    icon: Mail,
     action: 'support@example.com',
   },
   {
     id: 2,
     title: 'Live Chat',
     description: 'Chat with our support team',
-    icon: 'mdi:chat',
+    icon: MessageCircle,
     action: 'Start Chat',
   },
   {
     id: 3,
     title: 'Documentation',
     description: 'Browse our help center',
-    icon: 'mdi:book-open',
+    icon: BookOpen,
     action: 'View Docs',
   },
 ];
@@ -78,7 +87,7 @@ export default function HelpPage() {
   return (
     <PageLayout
       title="Help & Support"
-      icon="mdi:help-circle"
+      icon="help-circle"
       loading={loading}
       error={error}
     >
@@ -101,12 +110,13 @@ export default function HelpPage() {
                     className="w-full flex items-center gap-4 p-4 hover:bg-foreground/10 transition-colors"
                   >
                     <div className="p-2 rounded-lg bg-foreground/5">
-                      <Icon icon={faq.icon} className="w-5 h-5 text-foreground" />
+                      {React.createElement(faq.icon, { className: 'w-5 h-5 text-foreground' })}
                     </div>
                     <div className="flex-1 text-left font-medium">{faq.question}</div>
-                    <Icon 
-                      icon={expandedFaq === faq.id ? 'mdi:chevron-up' : 'mdi:chevron-down'} 
-                      className="w-5 h-5 text-foreground/60"
+                    <ChevronDown 
+                      className={`w-5 h-5 text-foreground/60 transition-transform duration-200 ${
+                        expandedFaq === faq.id ? 'rotate-180' : ''
+                      }`}
                     />
                   </button>
                   {expandedFaq === faq.id && (
@@ -135,7 +145,7 @@ export default function HelpPage() {
                 >
                   <div className="flex items-center gap-3 mb-3">
                     <div className="p-2 rounded-lg bg-foreground/5">
-                      <Icon icon={option.icon} className="w-5 h-5 text-foreground" />
+                      {React.createElement(option.icon, { className: 'w-5 h-5 text-foreground' })}
                     </div>
                     <div className="font-medium">{option.title}</div>
                   </div>
